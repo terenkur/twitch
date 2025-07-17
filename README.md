@@ -23,6 +23,14 @@ TWITCH_CHANNEL=channel_name
 PORT=3001
 ```
 
+If these variables are not set, the backend falls back to a demo Supabase
+project:
+
+```text
+SUPABASE_URL=https://bsiiyuwbzhwrflsdpoud.supabase.co
+SUPABASE_SERVICE_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJzaWl5dXdiemh3cmZsc2Rwb3VkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTI3NDIzMzUsImV4cCI6MjA2ODMxODMzNX0.2dGo45jMsUK4Zg8aoSc4kuXd2yBIpFfXgzvhw6zEQfU
+```
+
 For local development copy `.env.example` to `.env` and fill in your values.
 The backend uses [dotenv](https://github.com/motdotla/dotenv) to load this file
 automatically. On Render, define the same variables in the **Environment** tab
