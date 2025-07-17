@@ -15,9 +15,8 @@ The backend uses `express` and `tmi.js` to run a Twitch chat bot. Votes are stor
 Environment variables expected by `backend/index.js`:
 
 ```bash
-# Supabase credentials are embedded in the code but can be overridden
-SUPABASE_URL=https://bsiiyuwbzhwrflsdpoud.supabase.co
-SUPABASE_SERVICE_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJzaWl5dXdiemh3cmZsc2Rwb3VkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTI3NDIzMzUsImV4cCI6MjA2ODMxODMzNX0.2dGo45jMsUK4Zg8aoSc4kuXd2yBIpFfXgzvhw6zEQfU
+SUPABASE_URL=<your-supabase-url>
+SUPABASE_SERVICE_KEY=<your-service-key>
 TWITCH_BOT_USERNAME=bot_username
 TWITCH_OAUTH_TOKEN=oauth:token
 TWITCH_CHANNEL=channel_name

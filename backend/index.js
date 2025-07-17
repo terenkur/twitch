@@ -6,13 +6,15 @@ const app = express();
 const port = process.env.PORT || 3001;
 app.use(express.json());
 
-// Supabase initialization
-// Default to provided credentials if environment variables are missing
-const supabaseUrl =
-  process.env.SUPABASE_URL || 'https://bsiiyuwbzhwrflsdpoud.supabase.co';
-const supabaseKey =
-  process.env.SUPABASE_SERVICE_KEY ||
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJzaWl5dXdiemh3cmZsc2Rwb3VkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTI3NDIzMzUsImV4cCI6MjA2ODMxODMzNX0.2dGo45jMsUK4Zg8aoSc4kuXd2yBIpFfXgzvhw6zEQfU';
+// Supabase initialization using environment variables only
+const supabaseUrl = process.env.SUPABASE_URL;
+const supabaseKey = process.env.SUPABASE_SERVICE_KEY;
+
+if (!supabaseUrl || !supabaseKey) {
+  console.error('Supabase credentials are missing');
+  process.exit(1);
+}
+
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 // Twitch bot configuration
