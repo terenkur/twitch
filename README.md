@@ -4,7 +4,7 @@ This repository contains a minimal example of a site dedicated to a Twitch strea
 It demonstrates how to combine several services:
 
 - **Frontend**: deployed on Vercel (see `frontend/` folder).
-- **Backend and bot**: Node.js service deployed on Render (see `backend/`).
+- **Backend and bot**: Node.js service deployed on Railway (see `backend/`).
 - **Database**: Supabase for storing viewers, votes and roulette results.
 - **Twitch API**: used for OAuth and reading chat messages.
 
@@ -31,7 +31,9 @@ npm install
 npm start
 ```
 
-Deploy the backend on **Render** as a web service pointing to `index.js`.
+Deploy the backend on **Railway** as a service pointing to `index.js`.
+Make sure to define the environment variables above in the Railway dashboard
+under **Settings → Variables**.
 
 ### API Endpoints
 
@@ -48,6 +50,8 @@ The backend exposes a few endpoints focused on managing votes:
 The `frontend/` folder can contain any Vercel-compatible frontend (for example, Next.js).
 For brevity it only contains a placeholder file.
 Deploy this folder on **Vercel**.
+You can connect your GitHub repo to Vercel and set any required environment variables in
+the project settings (such as the URL of your Railway backend).
 
 ## Database schema
 
