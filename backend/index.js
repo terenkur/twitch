@@ -4,10 +4,15 @@ import { createClient } from '@supabase/supabase-js';
 
 const app = express();
 const port = process.env.PORT || 3001;
+app.use(express.json());
 
 // Supabase initialization
-const supabaseUrl = process.env.SUPABASE_URL;
-const supabaseKey = process.env.SUPABASE_SERVICE_KEY;
+// Default to provided credentials if environment variables are missing
+const supabaseUrl =
+  process.env.SUPABASE_URL || 'https://bsiiyuwbzhwrflsdpoud.supabase.co';
+const supabaseKey =
+  process.env.SUPABASE_SERVICE_KEY ||
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJzaWl5dXdiemh3cmZsc2Rwb3VkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTI3NDIzMzUsImV4cCI6MjA2ODMxODMzNX0.2dGo45jMsUK4Zg8aoSc4kuXd2yBIpFfXgzvhw6zEQfU';
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 // Twitch bot configuration
@@ -34,6 +39,33 @@ client.on('message', async (channel, tags, message, self) => {
     await supabase.from('votes').insert({ user: tags['user-id'], game });
     client.say(channel, `${tags.username} проголосовал за ${game}`);
   }
+});
+
+// --- REST API for database access ---
+app.post('/vote', async (req, res) => {
+  const { user, game } = req.body;
+  if (!user || !game) {
+    return res.status(400).json({ error: 'user and game required' });
+  }
+  const { error } = await supabase.from('votes').insert({ user, game });
+  if (error) return res.status(500).json({ error: error.message });
+  res.status(201).json({ message: 'Vote recorded' });
+});
+
+app.get('/votes', async (req, res) => {
+  const { data, error } = await supabase.from('votes').select('*');
+  if (error) return res.status(500).json({ error: error.message });
+  res.json(data);
+});
+
+app.get('/games', async (req, res) => {
+  const { data, error } = await supabase.from('votes').select('game');
+  if (error) return res.status(500).json({ error: error.message });
+  const counts = data.reduce((acc, row) => {
+    acc[row.game] = (acc[row.game] || 0) + 1;
+    return acc;
+  }, {});
+  res.json(counts);
 });
 
 app.get('/', (req, res) => {
